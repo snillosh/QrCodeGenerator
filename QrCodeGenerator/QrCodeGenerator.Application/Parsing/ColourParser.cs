@@ -4,7 +4,7 @@ using Avalonia.Media;
 
 namespace QrCodeGenerator.Application.Parsing;
 
-public class ColourParser
+public static class ColourParser
 {
     public static string? WarnIfContrastMayBePoor(
         string darkColorInput,
@@ -42,5 +42,19 @@ public class ColourParser
         double b = Channel(c.B);
 
         return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+
+    public static byte[] ToRgba(
+        this string hexColour)
+    {
+        var colour = Color.Parse(hexColour);
+
+        return 
+        [
+            colour.R,
+            colour.G,
+            colour.B,
+            colour.A
+        ];
     }
 }
