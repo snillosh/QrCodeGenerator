@@ -32,10 +32,10 @@
         
         <Button Grid.Column="0" Grid.Row="1" Content="Generate" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"></Button>
         <ColorPicker Grid.Column="1" Grid.Row="1"
-                     Color="{Binding LightColour}"
+                     Color="{Binding LightColour, Mode=TwoWay}"
                      IsAlphaEnabled="False" />
         <ColorPicker Grid.Column="2" Grid.Row="1"
-                     Color="{Binding DarkColour}"
+                     Color="{Binding DarkColour, Mode=TwoWay}"
                      IsAlphaEnabled="False" />
         
     </Grid>
