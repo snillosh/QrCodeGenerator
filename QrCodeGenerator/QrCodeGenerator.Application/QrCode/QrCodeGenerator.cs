@@ -6,7 +6,7 @@ namespace QrCodeGenerator.Application.QrCode;
 
 public sealed class QrCodeGenerator
 {
-    public async Task GenerateQrCode(string url, string darkColorHex, string lightColorHex, string savePath)
+    public async Task GenerateQrCode(string url, Color darkColor, Color lightColor, string savePath)
     {
         
         using var generator = new QRCodeGenerator();
@@ -16,8 +16,8 @@ public sealed class QrCodeGenerator
 
         var pngBytes = pngQr.GetGraphic(
         pixelsPerModule: 10,
-        darkColorRgba: darkColorHex.ToRgba(),
-        lightColorRgba: lightColorHex.ToRgba()
+        darkColorRgba: darkColor.ToRgba(),
+        lightColorRgba: lightColor.ToRgba()
         );
         
         await File.WriteAllBytesAsync(savePath, pngBytes);

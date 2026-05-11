@@ -45,10 +45,8 @@ public static class ColourParser
     }
 
     public static byte[] ToRgba(
-        this string hexColour)
+        this Color colour)
     {
-        var colour = Color.Parse(hexColour);
-
         return 
         [
             colour.R,
