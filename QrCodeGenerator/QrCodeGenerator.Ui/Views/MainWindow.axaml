@@ -8,11 +8,11 @@
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Icon="/Assets/avalonia-logo.ico"
-        Title="QR Code Generator">
+        Title="QR Code Generator"
+        MaxHeight="250"
+        MaxWidth="700">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
@@ -25,19 +25,53 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
         <TextBlock Grid.Column="0" Grid.Row="0" Text="QR Code URL:" VerticalAlignment="Center" Margin="10"></TextBlock>
-        <TextBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" PlaceholderText="https://website.com" VerticalAlignment="Center" Margin="10"></TextBox>
+        <TextBox Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" PlaceholderText="https://website.com" VerticalAlignment="Center" Margin="10"></TextBox>
         
         <Button Command="{Binding GenerateCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Grid.Column="0" Grid.Row="1" Content="Generate" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"></Button>
-        <ColorPicker Grid.Column="1" Grid.Row="1"
-                     Color="{Binding LightColour, Mode=TwoWay}"
-                     IsAlphaEnabled="False" />
-        <ColorPicker Grid.Column="2" Grid.Row="1"
-                     Color="{Binding DarkColour, Mode=TwoWay}"
-                     IsAlphaEnabled="False" />
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Main QR Code Color" Margin="10" VerticalAlignment="Center"></TextBlock>
+            <ColorPicker Color="{Binding LightColour, Mode=TwoWay}"
+                         IsAlphaEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="Background Color" Margin="10" VerticalAlignment="Center"></TextBlock>
+            <ColorPicker Color="{Binding DarkColour, Mode=TwoWay}"
+                         IsAlphaEnabled="False" />
+        </StackPanel>
         
+        <Border
+            Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
+            BorderBrush="Orange"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="12"
+            Margin="10"
+            IsVisible="{Binding HasContrastWarning}">
+
+            <DockPanel>
+                <TextBlock
+                    Text="⚠"
+                    FontSize="20"
+                    Margin="0,0,10,0"
+                    DockPanel.Dock="Left" />
+
+                <StackPanel>
+                    <TextBlock
+                        Text="QR contrast warning"
+                        FontWeight="Bold" />
+
+                    <TextBlock
+                        Text="{Binding ContrastWarning}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+
     </Grid>
 
 </Window>
