@@ -1,5 +1,4 @@
 <Solution>
   <Project Path="QrCodeGenerator.Application/QrCodeGenerator.Application.csproj" />
-  <Project Path="QrCodeGenerator.Domain/QrCodeGenerator.Domain.csproj" />
   <Project Path="QrCodeGenerator.Ui/QrCodeGenerator.Ui.csproj" />
 </Solution>

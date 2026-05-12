@@ -8,7 +8,6 @@ public sealed class QrCodeGenerator
 {
     public async Task GenerateQrCode(string url, Color darkColor, Color lightColor, string savePath)
     {
-        
         using var generator = new QRCodeGenerator();
         using var data = generator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
 

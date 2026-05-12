@@ -3,75 +3,101 @@
         xmlns:vm="using:QrCodeGenerator.Ui.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="520"
         x:Class="QrCodeGenerator.Ui.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
         Icon="/Assets/avalonia-logo.ico"
         Title="QR Code Generator"
-        MaxHeight="250"
-        MaxWidth="700">
+        Width="720"
+        Height="430">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="QR Code URL:" VerticalAlignment="Center" Margin="10"></TextBlock>
-        <TextBox Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" PlaceholderText="https://website.com" VerticalAlignment="Center" Margin="10"></TextBox>
-        
-        <Button Command="{Binding GenerateCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" Grid.Column="0" Grid.Row="1" Content="Generate" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"></Button>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="Main QR Code Color" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <ColorPicker Color="{Binding LightColour, Mode=TwoWay}"
-                         IsAlphaEnabled="False" />
-        </StackPanel>
-        <StackPanel Grid.Column="2" Grid.Row="1" Orientation="Horizontal">
-            <TextBlock Text="Background Color" Margin="10" VerticalAlignment="Center"></TextBlock>
-            <ColorPicker Color="{Binding DarkColour, Mode=TwoWay}"
-                         IsAlphaEnabled="False" />
-        </StackPanel>
-        
-        <Border
-            Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3"
-            BorderBrush="Orange"
-            BorderThickness="1"
-            CornerRadius="8"
-            Padding="12"
-            Margin="10"
-            IsVisible="{Binding HasContrastWarning}">
+    <Border Margin="24"
+            Padding="24"
+            CornerRadius="16"
+            BorderThickness="1">
 
-            <DockPanel>
-                <TextBlock
-                    Text="⚠"
-                    FontSize="20"
-                    Margin="0,0,10,0"
-                    DockPanel.Dock="Left" />
+        <StackPanel Spacing="20">
 
-                <StackPanel>
-                    <TextBlock
-                        Text="QR contrast warning"
-                        FontWeight="Bold" />
+            <StackPanel Spacing="4">
+                <TextBlock Text="QR Code Generator"
+                           FontSize="24"
+                           FontWeight="SemiBold" />
 
-                    <TextBlock
-                        Text="{Binding ContrastWarning}"
-                        TextWrapping="Wrap" />
+                <TextBlock Text="Create a QR code from a website URL and choose your colours."
+                           Opacity="0.65" />
+            </StackPanel>
+
+            <StackPanel Spacing="8">
+                <TextBlock Text="Website URL"
+                           FontWeight="SemiBold" />
+
+                <TextBox Text="{Binding Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Watermark="https://website.com"
+                         MinHeight="38" />
+
+                <TextBlock Text="{Binding UrlError}"
+                           TextWrapping="Wrap"
+                           Foreground="Red"
+                           FontSize="12" />
+            </StackPanel>
+
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions="Auto"
+                  ColumnSpacing="16">
+
+                <StackPanel Grid.Column="0" Spacing="8">
+                    <TextBlock Text="QR code colour"
+                               FontWeight="SemiBold" />
+
+                    <ColorPicker Color="{Binding DarkColour, Mode=TwoWay}"
+                                 IsAlphaEnabled="False" />
                 </StackPanel>
-            </DockPanel>
-        </Border>
 
+                <StackPanel Grid.Column="1" Spacing="8">
+                    <TextBlock Text="Background colour"
+                               FontWeight="SemiBold" />
 
-    </Grid>
+                    <ColorPicker Color="{Binding LightColour, Mode=TwoWay}"
+                                 IsAlphaEnabled="False" />
+                </StackPanel>
 
+            </Grid>
+
+            <Border BorderBrush="Orange"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Padding="12"
+                    IsVisible="{Binding HasContrastWarning}">
+
+                <DockPanel>
+                    <TextBlock Text="⚠"
+                               FontSize="22"
+                               Margin="0,0,12,0"
+                               DockPanel.Dock="Left" />
+
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="QR contrast warning"
+                                   FontWeight="SemiBold" />
+
+                        <TextBlock Text="{Binding ContrastWarning}"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <Button Content="Generate QR Code"
+                    Command="{Binding GenerateCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
+                    HorizontalAlignment="Right"
+                    MinWidth="160" />
+
+        </StackPanel>
+    </Border>
 </Window>
